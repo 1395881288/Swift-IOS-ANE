@@ -1,3 +1,7 @@
+### iOS11 Beta and XCode 9 branch
+- Add PDFKit to check iOS 11 can be used
+- Upgrade to Swift 4.0
+
 ### 0.0.7 
 - Convert FreXxxxSwift classes to camel case.
 - Change FRENamedFunction array to prevent ARC of strings.

@@ -1,7 +1,16 @@
-# Swift iOS ANE  
+# Swift iOS ANE  XCode9 and iOS 11 Beta
 
-Example Xcode project showing how to create Air Native Extensions for iOS using Swift.
-It supports iOS 9.0+
+Example Xcode project showing how to create Air Native Extensions for iOS using Swift 4.0.
+
+
+----------
+
+**This branch is experimental. It is used to build ANEs for iOS 11 Beta using XCode 9 beta.
+Please see tech notes below. There is some configuration needed !!**
+
+The example uses PDFKit with is new in iOS 11
+
+----------
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5UR2T52J633RC)
 
@@ -123,9 +132,22 @@ do {
 ----------
 ### Running on Simulator
 
-The example project can be run on the Simulator from IntelliJ
+iOS 11 enforces x86_64 for simulator builds. AIR only produces i386 simulator builds. Therefore, you cannot run projects with iOS11 ANEs in the XCode Simulator 
 
-### Running on Device !
+### Running on Device !!
+
+You need to do the following first.
+1) Download latest XCode 9.0 Beta from developer.apple.com
+2) Install latest iOS11 Beta on your device.
+3) Make a copy of your AIR SDK. We are going to be modding it.
+4) You need to create a symlink from your AIRSDK to the iOS SDK   
+````bash ln -s /Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld /Users/User/sdks/AIR/AIRSDK_26_IOS11/lib/aot/bin/ld64/ld64````
+5) Copy this tbd from here:   
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libgcc_s.1.tbd   
+to here:   
+/Applications/Xcode-beta.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libgcc_s.1.tbd
+
+6) Get the provided example project running. Don't be impatient and go gung-ho on your own project before studying the example.
 
 The example project needs to be built and signed in the correct manner.   
 AIR's ADT does not yet handle signing of the shared Swift Libraries correctly.   
@@ -139,6 +161,6 @@ Here is a video [demonstrating how to use it](https://www.youtube.com/watch?v=H-
 
 You will need
 
-- Xcode 8.3 / AppCode
+- Xcode 9.0 Beta
 - IntelliJ IDEA
-- AIR 25
+- AIR 26
