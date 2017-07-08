@@ -48,7 +48,7 @@
 - (FREResult)FRENewObjectWithClassName:(NSString *_Nonnull)className
                                   argc:(uint32_t)argc
                                   argv:(NSPointerArray *_Nullable)argv
-                                object:(FREObject _Nonnull)object
+                                object:(FREObject _Nullable)object
                        thrownException:(FREObject _Nullable)thrownException {
     if (argc > 0) {
         FREObject _argv[argc];
@@ -65,7 +65,7 @@
                                 methodName:(NSString *_Nonnull)methodName
                                       argc:(uint32_t)argc
                                       argv:(NSPointerArray *_Nullable)argv
-                                    result:(FREObject _Nonnull)result
+                                    result:(FREObject _Nullable)result
                            thrownException:(FREObject _Nullable)thrownException {
 
     if (argc > 0) {
@@ -81,7 +81,7 @@
 
 - (FREResult)FRESetArrayElementAWithArrayOrVector:(FREObject _Nonnull)arrayOrVector
                                             index:(uint32_t)index
-                                            value:(FREObject _Nonnull)value {
+                                            value:(FREObject _Nullable)value {
     return FRESetArrayElementAt(arrayOrVector, index, value);
 }
 
@@ -118,16 +118,23 @@
     return FREGetObjectAsDouble(object, value);
 }
 
-- (FREResult)FREGetObjectAsUTF8WithObject:(FREObject _Nonnull)object
-                                   length:(uint32_t *_Nullable)length
-                                    value:(const uint8_t **_Nullable)value {
+//- (FREResult)FREGetObjectAsUTF8WithObject:(FREObject _Nonnull)object
+//                                   length:(uint32_t * _Nonnull)length
+//                                    value:(uint8_t const * _Nullable const * _Nullable)value {
+//    return FREGetObjectAsUTF8(object, length, value);
+//}
 
+
+- (FREResult)FREGetObjectAsUTF8WithObject:(FREObject _Nonnull)object
+                                   length:(uint32_t *_Nonnull)length
+                                    value:(const uint8_t **_Nullable)value {
+    
     return FREGetObjectAsUTF8(object, length, value);
 }
 
 - (FREResult)FREGetObjectPropertyWithObject:(FREObject _Nonnull)object
                                propertyName:(NSString *_Nonnull)propertyName
-                              propertyValue:(FREObject _Nonnull)propertyValue
+                              propertyValue:(FREObject _Nullable)propertyValue
                             thrownException:(FREObject _Nullable)thrownException {
 
     return FREGetObjectProperty(object, (const uint8_t *) [propertyName UTF8String], propertyValue, &thrownException);
@@ -136,19 +143,20 @@
 
 - (FREResult)FRESetObjectPropertyWithObject:(FREObject _Nonnull)object
                                propertyName:(NSString *_Nonnull)propertyName
-                              propertyValue:(FREObject _Nonnull)propertyValue
+                              propertyValue:(FREObject _Nullable)propertyValue
                             thrownException:(FREObject _Nullable)thrownException {
 
     return FRESetObjectProperty(object, (const uint8_t *) [propertyName UTF8String], propertyValue, &thrownException);
 }
 
 
-- (FREResult)FREGetObjectTypeWithObject:(FREObject _Nullable)object objectType:(FREObjectType *_Nullable)objectType {
+- (FREResult)FREGetObjectTypeWithObject:(FREObject _Nullable)object
+                             objectType:(FREObjectType *_Nonnull)objectType {
     return FREGetObjectType(object, objectType);
 }
 
 - (FREResult)FREAcquireBitmapData2WithObject:(FREObject _Nonnull)object
-                             descriptorToSet:(FREBitmapData2 *_Nullable)descriptorToSet {
+                             descriptorToSet:(FREBitmapData2 *_Nonnull)descriptorToSet {
     return FREAcquireBitmapData2(object, descriptorToSet);
 }
 
@@ -157,7 +165,7 @@
 }
 
 - (FREResult)FREAcquireByteArrayWithObject:(FREObject _Nonnull)object
-                            byteArrayToSet:(FREByteArray *_Nullable)byteArrayToSet {
+                            byteArrayToSet:(FREByteArray *_Nonnull)byteArrayToSet {
     return FREAcquireByteArray(object, byteArrayToSet);
 }
 
@@ -167,12 +175,12 @@
 
 
 - (FREResult)FRESetContextActionScriptDataWithCtx:(FREContext _Nonnull)ctx
-                                 actionScriptData:(FREObject _Nullable)actionScriptData {
+                                 actionScriptData:(FREObject _Nonnull)actionScriptData {
     return FRESetContextActionScriptData(ctx, actionScriptData);
 }
 
 - (FREResult)FREGetContextActionScriptDataWithCtx:(FREContext _Nonnull)ctx
-                                 actionScriptData:(FREObject _Nullable)actionScriptData {
+                                 actionScriptData:(FREObject _Nonnull)actionScriptData {
     return FREGetContextActionScriptData(ctx, actionScriptData);
 }
 
@@ -185,13 +193,13 @@
 }
 
 - (FREResult)FRESetContextNativeDataWithCtx:(FREContext _Nonnull)ctx
-                                 nativeData:(void *_Nullable)nativeData {
+                                 nativeData:(void *_Nonnull)nativeData {
     return FRESetContextNativeData(ctx, nativeData);
 
 }
 
 - (FREResult)FREGetContextNativeDataWithCtx:(FREContext _Nonnull)ctx
-                                 nativeData:(void **_Nullable)nativeData {
+                                 nativeData:(void **_Nonnull)nativeData {
     return FREGetContextNativeData(ctx, nativeData);
 }
 

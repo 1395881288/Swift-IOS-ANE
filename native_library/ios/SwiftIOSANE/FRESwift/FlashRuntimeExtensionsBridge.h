@@ -18,6 +18,8 @@
  */
 #import <Foundation/Foundation.h>
 #import <FreSwift/FlashRuntimeExtensions.h>
-#import "FreSwift-Swift.h"
+#import <FreSwift/FreSwift-Swift.h>
+//#import "FreSwift-Swift.h"
+
 @interface FlashRuntimeExtensionsBridge : NSObject<FreSwiftBridgeProtocol>
 @end

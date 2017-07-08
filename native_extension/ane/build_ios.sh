@@ -5,14 +5,14 @@ echo "Setting path to current directory to:"
 pathtome=$0
 pathtome="${pathtome%/*}"
 
-
 echo $pathtome
 
 PROJECTNAME=SwiftIOSANE
 fwSuffix="_FW"
 libSuffix="_LIB"
 
-AIR_SDK="/Users/User/sdks/AIR/AIRSDK_26"
+AIR_SDK="/Users/User/sdks/AIR/AIRSDK_26_IOS11"
+#AIR_SDK="/Users/User/sdks/AIR/AIRSDK_26"
 echo $AIR_SDK
 
 #Setup the directory.
@@ -32,6 +32,9 @@ mkdir "$pathtome/platforms/ios/simulator/Frameworks"
 fi
 if [ ! -d "$pathtome/platforms/ios/device" ]; then
 mkdir "$pathtome/platforms/ios/device"
+fi
+if [ ! -d "$pathtome/platforms/ios/universal" ]; then
+mkdir "$pathtome/platforms/ios/universal"
 fi
 if [ ! -d "$pathtome/platforms/ios/device/Frameworks" ]; then
 mkdir "$pathtome/platforms/ios/device/Frameworks"
@@ -53,6 +56,7 @@ unzip "$pathtome/$PROJECTNAME.swc" "library.swf" -d "$pathtome"
 echo "Copying library.swf into place."
 cp "$pathtome/library.swf" "$pathtome/platforms/ios/simulator"
 cp "$pathtome/library.swf" "$pathtome/platforms/ios/device"
+cp "$pathtome/library.swf" "$pathtome/platforms/ios/universal"
 cp "$pathtome/library.swf" "$pathtome/platforms/ios/default"
 
 #Copy native libraries into place.
@@ -67,20 +71,23 @@ cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/FreSwift/FreSwift-Swif
 
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphonesimulator/FreSwift.framework" "$pathtome/platforms/ios/simulator/Frameworks"
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/FreSwift.framework" "$pathtome/platforms/ios/device/Frameworks"
+#cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/FreSwift.framework" "$pathtome/platforms/ios/universal/Frameworks"
+
+#universal
 
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphonesimulator/$PROJECTNAME$fwSuffix.framework" "$pathtome/platforms/ios/simulator/Frameworks"
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/$PROJECTNAME$fwSuffix.framework" "$pathtome/platforms/ios/device/Frameworks"
+#cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/$PROJECTNAME$fwSuffix.framework" "$pathtome/platforms/ios/universal/Frameworks"
 
+#lipo -create -output "$pathtome/platforms/ios/universal/lib$PROJECTNAME.a"  "$pathtome/platforms/ios/device/lib$PROJECTNAME.a" "$pathtome/platforms/ios/simulator/lib$PROJECTNAME.a"
+#lipo -create -output "$pathtome/platforms/ios/universal/tmp"  "$pathtome/platforms/ios/device/Frameworks/$PROJECTNAME$fwSuffix.framework/$PROJECTNAME$fwSuffix" "$pathtome/platforms/ios/simulator/Frameworks/$PROJECTNAME$fwSuffix.framework/$PROJECTNAME$fwSuffix"
 
 
 #Run the build command.
-echo "Building Simulator Release."
+echo "Building Release."
 "$AIR_SDK"/bin/adt -package \
 -target ane "$pathtome/$PROJECTNAME-ios.ane" "$pathtome/extension_ios.xml" \
 -swc "$pathtome/$PROJECTNAME.swc" \
--platform iPhone-x86  -C "$pathtome/platforms/ios/simulator" "library.swf" "lib$PROJECTNAME.a" \
--platformoptions "$pathtome/platforms/ios/platform.xml" \
--C $pathtome/platforms/ios/simulator/Frameworks/ . \
 -platform iPhone-ARM  -C "$pathtome/platforms/ios/device" "library.swf" "lib$PROJECTNAME.a" \
 -platformoptions "$pathtome/platforms/ios/platform.xml" \
 -C $pathtome/platforms/ios/device/Frameworks/ . 
@@ -88,4 +95,3 @@ echo "Building Simulator Release."
 rm -r "$pathtome/platforms/ios/default"
 rm "$pathtome/$PROJECTNAME.swc"
 rm "$pathtome/library.swf"
-

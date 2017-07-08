@@ -23,11 +23,14 @@
 
 import Foundation
 import CoreImage
+import PDFKit
 
-@objc class SwiftController: FreSwiftController {
-
+public class SwiftController: FreSwiftController {
+    
+    var pdfView:PDFView!
+    
     // Must have this function. It exposes the methods to our entry ObjC.
-    func getFunctions() -> Array<String> {
+    @objc public func getFunctions() -> Array<String> {
 
         functionsToSet["runStringTests"] = runStringTests
         functionsToSet["runNumberTests"] = runNumberTests
@@ -189,9 +192,26 @@ import CoreImage
         guard argc == 1, let inFRE0 = argv[0] else {
             return nil
         }
-
+        
+        trace("PDFKit is iOS11 beta - iOS11 beta in AIR... Nice!!")
+        pdfView = PDFView() //PDFView is iOS 11 beta !!
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+            rootViewController.view.addSubview(pdfView)
+            
+            pdfView.backgroundColor = UIColor.white
+            pdfView.leadingAnchor.constraint(equalTo: rootViewController.view.leadingAnchor).isActive = true
+            pdfView.trailingAnchor.constraint(equalTo: rootViewController.view.trailingAnchor).isActive = true
+            pdfView.topAnchor.constraint(equalTo: rootViewController.view.topAnchor).isActive = true
+            pdfView.bottomAnchor.constraint(equalTo: rootViewController.view.bottomAnchor).isActive = true
+            
+            if let url = URL.init(string: "http://fpdownload.macromedia.com/pub/labs/flashruntimes/shared/air26_flashplayer26_releasenotes.pdf") {
+                pdfView.document = PDFDocument.init(url: url)
+            }
+        }
+        trace("pdf test finish")
+        
         let asBitmapData = FreBitmapDataSwift.init(freObject: inFRE0)
-
         defer {
             asBitmapData.releaseData()
         }
@@ -215,7 +235,7 @@ import CoreImage
             }
         } catch {
         }
-
+        
 
         trace("bitmap test finish")
 
@@ -304,7 +324,7 @@ import CoreImage
 
     }
 
-    func setFREContext(ctx: FREContext) {
+    @objc public func setFREContext(ctx: FREContext) {
         context = FreContextSwift.init(freContext: ctx)
     }
 

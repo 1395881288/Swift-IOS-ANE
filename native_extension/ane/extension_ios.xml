@@ -6,13 +6,14 @@
 	<versionNumber>0.0.7</versionNumber>
 	<platforms>
         
-	<platform name="iPhone-x86">
-		<applicationDeployment>
-			<nativeLibrary>libSwiftIOSANE.a</nativeLibrary>
-			<initializer>TRSOAExtInizer</initializer>
-			<finalizer>TRSOAExtFinizer</finalizer>
-		</applicationDeployment>
-	</platform>
+        
+<!--    <platform name="iPhone-x86">-->
+<!--        <applicationDeployment>-->
+<!--            <nativeLibrary>libSwiftIOSANE.a</nativeLibrary>-->
+<!--            <initializer>TRSOAExtInizer</initializer>-->
+<!--            <finalizer>TRSOAExtFinizer</finalizer>-->
+<!--        </applicationDeployment>-->
+<!--    </platform>-->
     <platform name="iPhone-ARM">
         <applicationDeployment>
             <nativeLibrary>libSwiftIOSANE.a</nativeLibrary>
