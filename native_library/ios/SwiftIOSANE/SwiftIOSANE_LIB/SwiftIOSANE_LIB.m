@@ -39,7 +39,7 @@ FRE_FUNCTION(callSwiftFunction) {
     return [swft callSwiftFunctionWithName:fName ctx:context argc:argc argv:argv];
 }
 
-void contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet, const FRENamedFunction **functionsToSet) {
+void TRSOA_contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet, const FRENamedFunction **functionsToSet) {
     swft = [[SwiftController alloc] init];
     [swft setFREContextWithCtx:ctx];
     freBridge = [[FlashRuntimeExtensionsBridge alloc] init];
@@ -47,12 +47,11 @@ void contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, u
     [swftBridge setDelegateWithBridge:freBridge];
     
     funcArray = [swft getFunctions];
-    /**************************************************************************/
-    /********************* DO NO MODIFY ABOVE THIS LINE ***********************/
-    /**************************************************************************/
     
+    /**************************************************************************/
     /******* MAKE SURE TO ADD FUNCTIONS HERE THE SAME AS SWIFT CONTROLLER *****/
     /**************************************************************************/
+    
     static FRENamedFunction extensionFunctions[] =
     {
         { (const uint8_t*) "runStringTests", (__bridge void *)@"runStringTests", &callSwiftFunction }
@@ -74,19 +73,19 @@ void contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, u
     
 }
 
-void contextFinalizer(FREContext ctx) {
+void TRSOA_contextFinalizer(FREContext ctx) {
     return;
 }
 
 void TRSOAExtInizer(void **extData, FREContextInitializer *ctxInitializer, FREContextFinalizer *ctxFinalizer) {
-    *ctxInitializer = &contextInitializer;
-    *ctxFinalizer = &contextFinalizer;
+    *ctxInitializer = &TRSOA_contextInitializer;
+    *ctxFinalizer = &TRSOA_contextFinalizer;
 }
 
 void TRSOAExtFinizer(void *extData) {
     FREContext nullCTX;
     nullCTX = 0;
-    contextFinalizer(nullCTX);
+    TRSOA_contextFinalizer(nullCTX);
     return;
 }
 

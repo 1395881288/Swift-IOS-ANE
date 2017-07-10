@@ -21,7 +21,6 @@
 #else
 #   error "Unknown Apple platform"
 #endif
-
 #endif
 
 //! Project version number for FRESwift.

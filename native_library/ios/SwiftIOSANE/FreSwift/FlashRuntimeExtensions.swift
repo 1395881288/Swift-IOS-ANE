@@ -886,10 +886,9 @@ public class FreByteArraySwift: NSObject {
                 bytes = _byteArray.bytes
             }
         } catch let e as FreError {
-            Swift.debugPrint("something went wrong in creating bytearray")
-            trace(e.message)
-            trace(e.stackTrace)
-            trace(e.type)
+            Swift.debugPrint(e.message)
+            Swift.debugPrint(e.stackTrace)
+            Swift.debugPrint(e.type)
         } catch {
         }
     }
@@ -1106,24 +1105,22 @@ public class FreBitmapDataSwift: NSObject {
 }
 
 
-public var context: FreContextSwift!
-
-public func trace(_ value: Any...) {
+public func freTrace(ctx:FreContextSwift, value: [Any]) {
     var traceStr: String = ""
     for i in 0..<value.count {
         traceStr = traceStr + "\(value[i])" + " "
     }
     do {
-        try context.dispatchStatusEventAsync(code: traceStr, level: "TRACE")
+        try ctx.dispatchStatusEventAsync(code: traceStr, level: "TRACE")
     } catch {
     }
 }
 
-public func traceError(message: String, line: Int, column: Int, file: String, freError: FreError?) {
-    trace("ERROR:", "message:", message, "file:", "[\(file):\(line):\(column)]")
+public func traceError(ctx:FreContextSwift, message: String, line: Int, column: Int, file: String, freError: FreError?) {
+    freTrace(ctx: ctx, value: ["ERROR:", "message:", message, "file:", "[\(file):\(line):\(column)]"])
     if let freError = freError {
-        trace(freError.type)
-        trace(freError.stackTrace)
+        freTrace(ctx: ctx, value: [freError.type])
+        freTrace(ctx: ctx, value: [freError.stackTrace])
     }
 }
 
@@ -1134,7 +1131,7 @@ public var functionsToSet: FREFunctionMap = [:]
 public typealias FreSwiftController = NSObject
 
 public extension FreSwiftController {
-    @objc func callSwiftFunction(name: String, ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
+    @objc public func callSwiftFunction(name: String, ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         if let fm = functionsToSet[name] {
             return fm(ctx, argc, argv)
         }

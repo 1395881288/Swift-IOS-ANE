@@ -26,6 +26,10 @@ import CoreImage
 import PDFKit
 
 public class SwiftController: FreSwiftController {
+    private var context: FreContextSwift!
+    private func trace(_ value: Any...){
+        freTrace(ctx: context, value: value)
+    }
     
     var pdfView:PDFView!
     
