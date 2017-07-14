@@ -48,17 +48,17 @@
 		<data>
 		Pn1qJJbWXU8OW0HBp/NAGG0fv/E=
 		</data>
+		<key>Headers/FRESwift-Swift.h</key>
+		<data>
+		0m9RmxyUjoQbvqFzgHOD/jry484=
+		</data>
+		<key>Headers/FRESwift.h</key>
+		<data>
+		XmGbo4JQniYNHy7dEyx/FXvP2UQ=
+		</data>
 		<key>Headers/FlashRuntimeExtensions.h</key>
 		<data>
 		Q5TJLXHp3ThyB7djK/cHK+MtS1M=
-		</data>
-		<key>Headers/FreSwift-Swift.h</key>
-		<data>
-		VUWiNUHkVG+4dmr3s/2bZC65dB4=
-		</data>
-		<key>Headers/FreSwift.h</key>
-		<data>
-		XmGbo4JQniYNHy7dEyx/FXvP2UQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -212,6 +212,28 @@
 			ad1qmJJKE+q39aW2Zr+R4dSbQcF6XqGzBjb5BvRvmD8=
 			</data>
 		</dict>
+		<key>Headers/FRESwift-Swift.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			0m9RmxyUjoQbvqFzgHOD/jry484=
+			</data>
+			<key>hash2</key>
+			<data>
+			5Zr2GfvXfoVd8QDyjw5hHDdpNWnuYH++QDYKvdowTM8=
+			</data>
+		</dict>
+		<key>Headers/FRESwift.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			XmGbo4JQniYNHy7dEyx/FXvP2UQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			+eH0gwJqcxL84vkRZH3W8buHMO/La2/uKPJTudI69gk=
+			</data>
+		</dict>
 		<key>Headers/FlashRuntimeExtensions.h</key>
 		<dict>
 			<key>hash</key>
@@ -221,28 +243,6 @@
 			<key>hash2</key>
 			<data>
 			XT7E9Z1YC4dl1sdsGdFvALhgLhBQ5lSTdjnKwfrMduY=
-			</data>
-		</dict>
-		<key>Headers/FreSwift-Swift.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			VUWiNUHkVG+4dmr3s/2bZC65dB4=
-			</data>
-			<key>hash2</key>
-			<data>
-			1ZOvV5lFjZps7/pH+TpkPdwcwXQ54K1VQYPdykJHHSE=
-			</data>
-		</dict>
-		<key>Headers/FreSwift.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			XmGbo4JQniYNHy7dEyx/FXvP2UQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			+eH0gwJqcxL84vkRZH3W8buHMO/La2/uKPJTudI69gk=
 			</data>
 		</dict>
 		<key>Modules/FreSwift.swiftmodule/arm.swiftdoc</key>

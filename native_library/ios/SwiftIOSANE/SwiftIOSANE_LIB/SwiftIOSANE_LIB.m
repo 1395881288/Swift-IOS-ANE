@@ -1,52 +1,134 @@
-/*@copyright The code is licensed under the[MIT
- License](http://opensource.org/licenses/MIT):
+/* Copyright 2017 Tua Rua Ltd.
  
- Copyright © 2017 -  Tua Rua Ltd.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
  
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files(the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions :
+ http://www.apache.org/licenses/LICENSE-2.0
  
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.*/
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.*/
 
+#import "FreMacros.h"
 #import "SwiftIOSANE_LIB.h"
-#include "FlashRuntimeExtensions.h"
-#import "FlashRuntimeExtensionsBridge.h"
+#import <FreSwift/FlashRuntimeExtensions.h>
 #import "SwiftIOSANE_FW-Swift.h"
 
-
-FlashRuntimeExtensionsBridge *freBridge; // this runs the native FRE calls and returns to Swift
-SwiftController *swft; // our main Swift Controller
-FreSwiftBridge *swftBridge; // this is the bridge from Swift back to ObjectiveC
-
-NSArray * funcArray;
-#define FRE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
-
-FRE_FUNCTION(callSwiftFunction) {
-    NSString* fName = (__bridge NSString *)(functionData);
-    return [swft callSwiftFunctionWithName:fName ctx:context argc:argc argv:argv];
+#define FRE_OBJC_BRIDGE TRSOA_FlashRuntimeExtensionsBridge // use unique prefix throughout to prevent clashes with other ANEs
+@interface FRE_OBJC_BRIDGE : NSObject<FreSwiftBridgeProtocol>
+@end
+@implementation FRE_OBJC_BRIDGE {
 }
+FRE_OBJC_BRIDGE_FUNCS
+//- (FREResult)FREAcquireBitmapData2WithObject:(FREObject _Nonnull)object descriptorToSet:(FREBitmapData2 * _Nonnull)descriptorToSet {
+//    return FREAcquireBitmapData2(object, descriptorToSet);
+//}
+//- (FREResult)FREAcquireByteArrayWithObject:(FREObject _Nonnull)object byteArrayToSet:(FREByteArray * _Nonnull)byteArrayToSet {
+//    return FREAcquireByteArray(object, byteArrayToSet);
+//}
+//- (FREResult)FRECallObjectMethodWithObject:(FREObject _Nonnull)object methodName:(NSString * _Nonnull)methodName argc:(uint32_t)argc argv:(NSPointerArray * _Nullable)argv result:(FREObject _Nullable)result thrownException:(FREObject _Nullable)thrownException {
+//    if (argc > 0) {
+//        FREObject _argv[argc];
+//        for (int i = 0; i < argc; ++i) {
+//            _argv[i] = [argv pointerAtIndex:i];
+//        }
+//        return FRECallObjectMethod(object, (const uint8_t *) [methodName UTF8String], argc, _argv, result, thrownException);
+//    }
+//    return FRECallObjectMethod(object, (const uint8_t *) [methodName UTF8String], argc, NULL, result, thrownException);
+//}
+//- (FREResult)FREDispatchStatusEventAsyncWithCtx:(FREContext _Nonnull)ctx code:(NSString * _Nonnull)code level:(NSString * _Nonnull)level {
+//    return FREDispatchStatusEventAsync(ctx, (const uint8_t *) [code UTF8String], (const uint8_t *) [level UTF8String]);
+//}
+//- (FREResult)FREGetArrayElementAWithArrayOrVector:(FREObject _Nonnull)arrayOrVector index:(uint32_t)index value:(FREObject _Nullable)value {
+//    return FREGetArrayElementAt(arrayOrVector, index, value);
+//}
+//- (FREResult)FREGetArrayLengthWithArrayOrVector:(FREObject _Nonnull)arrayOrVector length:(uint32_t * _Nonnull)length {
+//    return FREGetArrayLength(arrayOrVector, length);
+//}
+//- (FREResult)FREGetContextActionScriptDataWithCtx:(FREContext _Nonnull)ctx actionScriptData:(FREObject _Nonnull)actionScriptData {
+//    return FREGetContextActionScriptData(ctx, actionScriptData);
+//}
+//- (FREResult)FREGetContextNativeDataWithCtx:(FREContext _Nonnull)ctx nativeData:(const void * _Nonnull * _Nonnull)nativeData {
+//    return FREGetContextNativeData(ctx, (void**)nativeData);
+//}
+//- (FREResult)FREGetObjectAsBoolWithObject:(FREObject _Nonnull)object value:(uint32_t * _Nonnull)value {
+//    return FREGetObjectAsBool(object, value);
+//}
+//- (FREResult)FREGetObjectAsDoubleWithObject:(FREObject _Nonnull)object value:(double * _Nonnull)value {
+//    return FREGetObjectAsDouble(object, value);
+//}
+//- (FREResult)FREGetObjectAsInt32WithObject:(FREObject _Nonnull)object value:(int32_t * _Nonnull)value {
+//    return FREGetObjectAsInt32(object, value);
+//}
+//- (FREResult)FREGetObjectAsUTF8WithObject:(FREObject _Nonnull)object length:(uint32_t * _Nonnull)length value:(const uint8_t *const  _Nullable * _Nullable)value {
+//    return FREGetObjectAsUTF8(object, length, (const uint8_t**)value);
+//}
+//- (FREResult)FREGetObjectAsUint32WithObject:(FREObject _Nonnull)object value:(uint32_t * _Nonnull)value {
+//    return FREGetObjectAsUint32(object, value);
+//}
+//- (FREResult)FREGetObjectPropertyWithObject:(FREObject _Nonnull)object propertyName:(NSString * _Nonnull)propertyName propertyValue:(FREObject _Nullable)propertyValue thrownException:(FREObject _Nullable)thrownException {
+//    return FREGetObjectProperty(object, (const uint8_t *) [propertyName UTF8String], propertyValue, &thrownException);
+//}
+//- (FREResult)FREGetObjectTypeWithObject:(FREObject _Nullable)object objectType:(FREObjectType * _Nonnull)objectType {
+//    return FREGetObjectType(object, objectType);
+//}
+//- (FREResult)FREInvalidateBitmapDataRectWithObject:(FREObject _Nonnull)object x:(uint32_t)x y:(uint32_t)y width:(uint32_t)width height:(uint32_t)height {
+//    return FREInvalidateBitmapDataRect(object, x, y, width, height);
+//}
+//- (FREResult)FRENewObjectFromBoolWithValue:(BOOL)value object:(FREObject _Nullable)object {
+//    return FRENewObjectFromBool(value ? 1 : 0, object);
+//}
+//- (FREResult)FRENewObjectFromDoubleWithValue:(double)value object:(FREObject _Nullable)object {
+//    return FRENewObjectFromDouble(value, object);
+//}
+//- (FREResult)FRENewObjectFromInt32WithValue:(int32_t)value object:(FREObject _Nullable)object {
+//    return FRENewObjectFromInt32(value, object);
+//}
+//- (FREResult)FRENewObjectFromUTF8WithLength:(uint32_t)length value:(NSString * _Nonnull)value object:(FREObject _Nullable)object {
+//    return FRENewObjectFromUTF8(length, (const uint8_t *) [value UTF8String], object);
+//}
+//- (FREResult)FRENewObjectFromUint32WithValue:(uint32_t)value object:(FREObject _Nullable)object {
+//    return FRENewObjectFromUint32(value, object);
+//}
+//- (FREResult)FRENewObjectWithClassName:(NSString * _Nonnull)className argc:(uint32_t)argc argv:(NSPointerArray * _Nullable)argv object:(FREObject _Nullable)object thrownException:(FREObject _Nullable)thrownException {
+//    if (argc > 0) {
+//        FREObject _argv[argc];
+//        for (int i = 0; i < argc; ++i) {
+//            _argv[i] = [argv pointerAtIndex:i];
+//        }
+//        return FRENewObject((const uint8_t *) [className UTF8String], argc, _argv, object, &thrownException);
+//    }
+//    return FRENewObject((const uint8_t *) [className UTF8String], argc, NULL, object, &thrownException);
+//}
+//- (FREResult)FREReleaseBitmapDataWithObject:(FREObject _Nonnull)object {
+//    return FREReleaseBitmapData(object);
+//}
+//- (FREResult)FREReleaseByteArrayWithObject:(FREObject _Nonnull)object {
+//    return FREReleaseByteArray(object);
+//}
+//- (FREResult)FRESetArrayElementAWithArrayOrVector:(FREObject _Nonnull)arrayOrVector index:(uint32_t)index value:(FREObject _Nullable)value {
+//    return FRESetArrayElementAt(arrayOrVector, index, value);
+//}
+//- (FREResult)FRESetArrayLengthWithArrayOrVector:(FREObject _Nonnull)arrayOrVector length:(uint32_t)length {
+//    return FRESetArrayLength(arrayOrVector, length);
+//}
+//- (FREResult)FRESetContextActionScriptDataWithCtx:(FREContext _Nonnull)ctx actionScriptData:(FREObject _Nonnull)actionScriptData {
+//    return FRESetContextActionScriptData(ctx, actionScriptData);
+//}
+//- (FREResult)FRESetContextNativeDataWithCtx:(FREContext _Nonnull)ctx nativeData:(const void * _Nonnull)nativeData {
+//    return FRESetContextNativeData(ctx, (void*)nativeData);
+//}
+//- (FREResult)FRESetObjectPropertyWithObject:(FREObject _Nonnull)object propertyName:(NSString * _Nonnull)propertyName propertyValue:(FREObject _Nullable)propertyValue thrownException:(FREObject _Nullable)thrownException {
+//    return FRESetObjectProperty(object, (const uint8_t *) [propertyName UTF8String], propertyValue, &thrownException);
+//}
+@end
 
-void TRSOA_contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet, const FRENamedFunction **functionsToSet) {
-    swft = [[SwiftController alloc] init];
-    [swft setFREContextWithCtx:ctx];
-    freBridge = [[FlashRuntimeExtensionsBridge alloc] init];
-    swftBridge = [[FreSwiftBridge alloc] init];
-    [swftBridge setDelegateWithBridge:freBridge];
-    
-    funcArray = [swft getFunctions];
+SWIFT_DECL(TRSOA) // use unique prefix throughout to prevent clashes with other ANEs
+CONTEXT_INIT(TRSOA) {
+    SWIFT_INITS(TRSOA)
     
     /**************************************************************************/
     /******* MAKE SURE TO ADD FUNCTIONS HERE THE SAME AS SWIFT CONTROLLER *****/
@@ -54,17 +136,18 @@ void TRSOA_contextInitializer(void *extData, const uint8_t *ctxType, FREContext 
     
     static FRENamedFunction extensionFunctions[] =
     {
-        { (const uint8_t*) "runStringTests", (__bridge void *)@"runStringTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runNumberTests", (__bridge void *)@"runNumberTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runIntTests", (__bridge void *)@"runIntTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runArrayTests", (__bridge void *)@"runArrayTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runObjectTests", (__bridge void *)@"runObjectTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runBitmapTests", (__bridge void *)@"runBitmapTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runByteArrayTests", (__bridge void *)@"runByteArrayTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runErrorTests", (__bridge void *)@"runErrorTests", &callSwiftFunction }
-        ,{ (const uint8_t*) "runErrorTests2", (__bridge void *)@"runErrorTests2", &callSwiftFunction }
-        ,{ (const uint8_t*) "runDataTests", (__bridge void *)@"runDataTests", &callSwiftFunction }
+        MAP_FUNCTION(TRSOA, runStringTests)
+        ,MAP_FUNCTION(TRSOA, runNumberTests)
+        ,MAP_FUNCTION(TRSOA, runIntTests)
+        ,MAP_FUNCTION(TRSOA, runArrayTests)
+        ,MAP_FUNCTION(TRSOA, runObjectTests)
+        ,MAP_FUNCTION(TRSOA, runBitmapTests)
+        ,MAP_FUNCTION(TRSOA, runByteArrayTests)
+        ,MAP_FUNCTION(TRSOA, runErrorTests)
+        ,MAP_FUNCTION(TRSOA, runErrorTests2)
+        ,MAP_FUNCTION(TRSOA, runDataTests)
     };
+    
     /**************************************************************************/
     /**************************************************************************/
     
@@ -73,20 +156,9 @@ void TRSOA_contextInitializer(void *extData, const uint8_t *ctxType, FREContext 
     
 }
 
-void TRSOA_contextFinalizer(FREContext ctx) {
-    return;
+CONTEXT_FIN(TRSOA) {
+    //any clean up code here
 }
-
-void TRSOAExtInizer(void **extData, FREContextInitializer *ctxInitializer, FREContextFinalizer *ctxFinalizer) {
-    *ctxInitializer = &TRSOA_contextInitializer;
-    *ctxFinalizer = &TRSOA_contextFinalizer;
-}
-
-void TRSOAExtFinizer(void *extData) {
-    FREContext nullCTX;
-    nullCTX = 0;
-    TRSOA_contextFinalizer(nullCTX);
-    return;
-}
-
+EXTENSION_INIT(TRSOA)
+EXTENSION_FIN(TRSOA)
 
