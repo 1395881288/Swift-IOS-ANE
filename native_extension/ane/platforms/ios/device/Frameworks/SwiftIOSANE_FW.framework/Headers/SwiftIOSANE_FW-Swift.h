@@ -187,7 +187,7 @@ SWIFT_MODULE_NAMESPACE_PUSH("SwiftIOSANE_FW")
 
 SWIFT_CLASS("_TtC14SwiftIOSANE_FW15SwiftController")
 @interface SwiftController : NSObject
-- (NSArray<NSString *> * _Nonnull)getFunctions SWIFT_WARN_UNUSED_RESULT;
+- (NSArray<NSString *> * _Nonnull)getFunctionsWithPrefix:(NSString * _Nonnull)prefix SWIFT_WARN_UNUSED_RESULT;
 - (void)setFREContextWithCtx:(FREContext _Nonnull)ctx;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end

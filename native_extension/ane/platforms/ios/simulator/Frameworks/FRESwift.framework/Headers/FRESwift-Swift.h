@@ -244,7 +244,7 @@ SWIFT_PROTOCOL("_TtP8FreSwift22FreSwiftBridgeProtocol_")
 - (FREResult)FREGetObjectPropertyWithObject:(FREObject _Nonnull)object propertyName:(NSString * _Nonnull)propertyName propertyValue:(FREObject _Nullable)propertyValue thrownException:(FREObject _Nullable)thrownException SWIFT_WARN_UNUSED_RESULT;
 - (FREResult)FRESetObjectPropertyWithObject:(FREObject _Nonnull)object propertyName:(NSString * _Nonnull)propertyName propertyValue:(FREObject _Nullable)propertyValue thrownException:(FREObject _Nullable)thrownException SWIFT_WARN_UNUSED_RESULT;
 - (FREResult)FREGetObjectTypeWithObject:(FREObject _Nullable)object objectType:(FREObjectType * _Nonnull)objectType SWIFT_WARN_UNUSED_RESULT;
-- (FREResult)FREGetObjectAsUTF8WithObject:(FREObject _Nonnull)object length:(uint32_t * _Nonnull)length value:(const uint8_t *_Nullable*_Nullable)value SWIFT_WARN_UNUSED_RESULT;
+- (FREResult)FREGetObjectAsUTF8WithObject:(FREObject _Nonnull)object length:(uint32_t * _Nonnull)length value:(uint8_t const * _Nullable const * _Nullable)value SWIFT_WARN_UNUSED_RESULT;
 - (FREResult)FRECallObjectMethodWithObject:(FREObject _Nonnull)object methodName:(NSString * _Nonnull)methodName argc:(uint32_t)argc argv:(NSPointerArray * _Nullable)argv result:(FREObject _Nullable)result thrownException:(FREObject _Nullable)thrownException SWIFT_WARN_UNUSED_RESULT;
 - (FREResult)FRESetArrayElementAWithArrayOrVector:(FREObject _Nonnull)arrayOrVector index:(uint32_t)index value:(FREObject _Nullable)value SWIFT_WARN_UNUSED_RESULT;
 - (FREResult)FREGetArrayElementAWithArrayOrVector:(FREObject _Nonnull)arrayOrVector index:(uint32_t)index value:(FREObject _Nullable)value SWIFT_WARN_UNUSED_RESULT;
@@ -257,8 +257,8 @@ SWIFT_PROTOCOL("_TtP8FreSwift22FreSwiftBridgeProtocol_")
 - (FREResult)FRESetContextActionScriptDataWithCtx:(FREContext _Nonnull)ctx actionScriptData:(FREObject _Nonnull)actionScriptData SWIFT_WARN_UNUSED_RESULT;
 - (FREResult)FREGetContextActionScriptDataWithCtx:(FREContext _Nonnull)ctx actionScriptData:(FREObject _Nonnull)actionScriptData SWIFT_WARN_UNUSED_RESULT;
 - (FREResult)FREInvalidateBitmapDataRectWithObject:(FREObject _Nonnull)object x:(uint32_t)x y:(uint32_t)y width:(uint32_t)width height:(uint32_t)height SWIFT_WARN_UNUSED_RESULT;
-- (FREResult)FRESetContextNativeDataWithCtx:(FREContext _Nonnull)ctx nativeData:(void *_Nonnull)nativeData SWIFT_WARN_UNUSED_RESULT;
-- (FREResult)FREGetContextNativeDataWithCtx:(FREContext _Nonnull)ctx nativeData:(void *_Nonnull*_Nonnull)nativeData SWIFT_WARN_UNUSED_RESULT;
+- (FREResult)FRESetContextNativeDataWithCtx:(FREContext _Nonnull)ctx nativeData:(void const * _Nonnull)nativeData SWIFT_WARN_UNUSED_RESULT;
+- (FREResult)FREGetContextNativeDataWithCtx:(FREContext _Nonnull)ctx nativeData:(void const * _Nonnull * _Nonnull)nativeData SWIFT_WARN_UNUSED_RESULT;
 @end
 
 

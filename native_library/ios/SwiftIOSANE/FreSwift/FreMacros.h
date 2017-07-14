@@ -12,15 +12,16 @@
  See the License for the specific language governing permissions and
  limitations under the License.*/
 
-#ifndef FreMacros_h
-#define FreMacros_h
-
 #if __APPLE__
 #include "TargetConditionals.h"
 #if (TARGET_IPHONE_SIMULATOR) || (TARGET_OS_IPHONE)
-#define IOS
+    #ifndef IOS
+        #define IOS
+    #endif
 #elif TARGET_OS_MAC
-#define OSX
+    #ifndef OSX
+        #define OSX
+    #endif
 #else
 #   error "Unknown Apple platform"
 #endif
@@ -186,4 +187,3 @@ return FRESetContextNativeData(ctx, (void*)nativeData); \
 return FRESetObjectProperty(object, (const uint8_t *) [propertyName UTF8String], propertyValue, &thrownException); \
 };
 #endif
-#endif /* FreMacros_h */

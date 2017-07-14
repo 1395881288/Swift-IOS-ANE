@@ -175,8 +175,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import ObjectiveC;
 #endif
 
-#import <FreSwift/FreSwift.h>
-
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
 #if __has_warning("-Wpragma-clang-attribute")

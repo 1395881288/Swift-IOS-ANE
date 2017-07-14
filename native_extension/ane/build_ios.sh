@@ -33,9 +33,6 @@ fi
 if [ ! -d "$pathtome/platforms/ios/device" ]; then
 mkdir "$pathtome/platforms/ios/device"
 fi
-if [ ! -d "$pathtome/platforms/ios/universal" ]; then
-mkdir "$pathtome/platforms/ios/universal"
-fi
 if [ ! -d "$pathtome/platforms/ios/device/Frameworks" ]; then
 mkdir "$pathtome/platforms/ios/device/Frameworks"
 fi
@@ -56,7 +53,6 @@ unzip "$pathtome/$PROJECTNAME.swc" "library.swf" -d "$pathtome"
 echo "Copying library.swf into place."
 cp "$pathtome/library.swf" "$pathtome/platforms/ios/simulator"
 cp "$pathtome/library.swf" "$pathtome/platforms/ios/device"
-cp "$pathtome/library.swf" "$pathtome/platforms/ios/universal"
 cp "$pathtome/library.swf" "$pathtome/platforms/ios/default"
 
 #Copy native libraries into place.
@@ -64,20 +60,11 @@ echo "Copying native libraries into place."
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphonesimulator/lib$PROJECTNAME$libSuffix.a" "$pathtome/platforms/ios/simulator/lib$PROJECTNAME.a"
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/lib$PROJECTNAME$libSuffix.a" "$pathtome/platforms/ios/device/lib$PROJECTNAME.a"
 
-cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/FreSwift/FreSwift-Swift.h" "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphonesimulator/FreSwift.framework/Headers/FreSwift-Swift.h"
-cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/FreSwift/FreSwift-Swift.h" "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/FreSwift.framework/Headers/FreSwift-Swift.h"
-cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/FreSwift/FreSwift-Swift.h" "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Debug-iphonesimulator/FreSwift.framework/Headers/FreSwift-Swift.h"
-cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/FreSwift/FreSwift-Swift.h" "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Debug-iphoneos/FreSwift.framework/Headers/FreSwift-Swift.h"
-
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphonesimulator/FreSwift.framework" "$pathtome/platforms/ios/simulator/Frameworks"
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/FreSwift.framework" "$pathtome/platforms/ios/device/Frameworks"
-#cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/FreSwift.framework" "$pathtome/platforms/ios/universal/Frameworks"
-
-#universal
 
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphonesimulator/$PROJECTNAME$fwSuffix.framework" "$pathtome/platforms/ios/simulator/Frameworks"
 cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/$PROJECTNAME$fwSuffix.framework" "$pathtome/platforms/ios/device/Frameworks"
-#cp -R -L "$pathtome/../../native_library/ios/$PROJECTNAME/Build/Products/Release-iphoneos/$PROJECTNAME$fwSuffix.framework" "$pathtome/platforms/ios/universal/Frameworks"
 
 #lipo -create -output "$pathtome/platforms/ios/universal/lib$PROJECTNAME.a"  "$pathtome/platforms/ios/device/lib$PROJECTNAME.a" "$pathtome/platforms/ios/simulator/lib$PROJECTNAME.a"
 #lipo -create -output "$pathtome/platforms/ios/universal/tmp"  "$pathtome/platforms/ios/device/Frameworks/$PROJECTNAME$fwSuffix.framework/$PROJECTNAME$fwSuffix" "$pathtome/platforms/ios/simulator/Frameworks/$PROJECTNAME$fwSuffix.framework/$PROJECTNAME$fwSuffix"
