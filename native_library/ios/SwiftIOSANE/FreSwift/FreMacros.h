@@ -35,6 +35,9 @@
 #define FRE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
 #define MAP_FUNCTION(prefix, fn) { (const uint8_t*)(#fn), (__bridge void *)(NSStringize(fn)), &prefix##_callSwiftFunction }
 
+#define SET_FUNCTIONS *numFunctionsToSet = sizeof( extensionFunctions ) / sizeof( FRENamedFunction ); \
+*functionsToSet = extensionFunctions;
+
 #define CONTEXT_INIT(prefix) void (prefix##_contextInitializer)(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet, const FRENamedFunction **functionsToSet)
 
 #define CONTEXT_FIN(prefix) void (prefix##_contextFinalizer) (FREContext ctx)

@@ -101,6 +101,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE0581F31F2561BA00596BC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CE3551CB1E7F1B0F009375A7 /* FreSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +163,7 @@
 				CE3980A01E58BEE10062485B /* SwiftIOSANE_LIB */,
 				CE3551CB1E7F1B0F009375A7 /* FreSwift */,
 				CE39806C1E58BA7F0062485B /* Products */,
+				CE0581F31F2561BA00596BC5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -352,14 +360,14 @@
 /* Begin PBXShellScriptBuildPhase section */
 		CE3980B21E58C0D80062485B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = ../../../native_extension/ane/build_ios.sh;
 		};
