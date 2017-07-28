@@ -212,15 +212,12 @@ public class FreSwiftHelper {
                         }
                     }
                 }
-
-
             }
         }
-
         return ret
     }
 
-    static func getProperty(rawValue: FREObject, name: String) throws -> FREObject? {
+    public static func getProperty(rawValue: FREObject, name: String) throws -> FREObject? {
         var ret: FREObject?
         var thrownException: FREObject?
 
@@ -358,7 +355,7 @@ public class FreSwiftHelper {
         return ret
     }
 
-    static func newObject(_ className: String, _ args: NSPointerArray?) throws -> FREObject? {
+    public static func newObject(_ className: String, _ args: NSPointerArray?) throws -> FREObject? {
         var ret: FREObject?
         var thrownException: FREObject?
         var numArgs: UInt32 = 0
@@ -425,7 +422,19 @@ public class FreSwiftHelper {
         let bFl: CGFloat = CGFloat.init(b) / 255
         return UIColor.init(red: rFl, green: gFl, blue: bFl, alpha: a)
     }
-
+    
+    public static func toUIColor(freObject: FREObject) throws -> UIColor {
+        let rgb = try FreSwiftHelper.getAsUInt(freObject);
+        let r = (rgb >> 16) & 0xFF
+        let g = (rgb >> 8) & 0xFF
+        let b = rgb & 0xFF
+        let a: CGFloat = CGFloat.init(1)
+        let rFl: CGFloat = CGFloat.init(r) / 255
+        let gFl: CGFloat = CGFloat.init(g) / 255
+        let bFl: CGFloat = CGFloat.init(b) / 255
+        return UIColor.init(red: rFl, green: gFl, blue: bFl, alpha: a)
+    }
+    
 #else
 
     public static func toCGColor(freObject: FREObject, alpha: FREObject) throws -> CGColor {
@@ -537,10 +546,8 @@ public struct FreError: Error {
               "[\(oFile):\(oLine):\(oColumn)]",
               stackTrace)
             return _aneError.rawValue
-
         } catch {
         }
-
         return nil
     }
 
@@ -568,7 +575,7 @@ public enum FreObjectTypeSwift: UInt32 {
 
 open class FreObjectSwift: NSObject {
     public var rawValue: FREObject? = nil
-    public var value: Any? {
+    open var value: Any? {
         get {
             do {
                 if let raw = rawValue {
@@ -583,6 +590,12 @@ open class FreObjectSwift: NSObject {
 
     public init(freObject: FREObject?) {
         rawValue = freObject
+    }
+    
+    public init(freObjectSwift: FreObjectSwift?) {
+        if let val = freObjectSwift?.rawValue {
+            rawValue = val
+        }
     }
 
     public init(string: String) throws {
@@ -965,6 +978,12 @@ public class FreBitmapDataSwift: NSObject {
     public init(freObject: FREObject) {
         rawValue = freObject
     }
+    
+    public init(freObjectSwift: FreObjectSwift?) {
+        if let val = freObjectSwift?.rawValue {
+            rawValue = val
+        }
+    }
 
     public init(cgImage: CGImage) {
         //TODO
@@ -1104,16 +1123,19 @@ public class FreBitmapDataSwift: NSObject {
 
 }
 
+public func sendEvent(ctx:FreContextSwift, name: String, value: String) {
+    do {
+        try ctx.dispatchStatusEventAsync(code: value, level: name)
+    } catch {
+    }
+}
 
 public func freTrace(ctx:FreContextSwift, value: [Any]) {
     var traceStr: String = ""
     for i in 0..<value.count {
         traceStr = traceStr + "\(value[i])" + " "
     }
-    do {
-        try ctx.dispatchStatusEventAsync(code: traceStr, level: "TRACE")
-    } catch {
-    }
+    sendEvent(ctx: ctx, name: "TRACE", value: traceStr)
 }
 
 public func traceError(ctx:FreContextSwift, message: String, line: Int, column: Int, file: String, freError: FreError?) {
